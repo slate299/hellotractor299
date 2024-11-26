@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Welcome to Tractor Marketplace</h1>
+        <p class="lead">Your one-stop platform for buying and selling second-hand tractors and equipment.</p>
+        <a href="{% url 'tractor-listings' %}" class="btn btn-primary">Browse Listings</a>
+    </div>
+</section>
+
+<!-- Featured Tractors Section -->
+<section id="featured-tractors" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Featured Tractors</h2>
+        <div class="row">
+            {% for tractor in tractors|slice:":3" %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ tractor.images.url }}" class="card-img-top" alt="{{ tractor.name }}" style="height: 250px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tractor.name }}</h5>
+                        <p class="card-text">{{ tractor.description|truncatewords:15 }}</p>
+                        <p><strong>Price:</strong> Ksh {{ tractor.price }}</p>
+                        <p><strong>Location:</strong> {{ tractor.location }}</p>
+                        <a href="{% url 'tractor-details' tractor.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Implements Section -->
+<section id="implements" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Featured Implements</h2>
+        <div class="row">
+            {% for implement in implements %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ implement.images.url }}" class="card-img-top" alt="{{ implement.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ implement.name }}</h5>
+                        <p><strong>Price:</strong> Ksh {{ implement.price }}</p>
+                        <p><strong>Category:</strong> {{ implement.category }}</p>
+                        <a href="{% url 'implement-details' implement.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

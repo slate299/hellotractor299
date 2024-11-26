@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center">{{ tractor.name }} Details</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <img src="{{ tractor.images.url }}" class="img-fluid" alt="Tractor Image">
+        </div>
+        <div class="col-md-4">
+            <h4>Tractor Info</h4>
+            <p><strong>Brand:</strong> {{ tractor.brand.name }}</p>
+            <p><strong>Price:</strong> Ksh {{ tractor.price }}</p>
+            <p><strong>Hours Used:</strong> {{ tractor.hours_used }} hours</p>
+            <p><strong>Location:</strong> {{ tractor.location }}</p>
+            <p><strong>Seller:</strong> {{ tractor.seller.username }}</p> <!-- Display seller's username -->
+            <p><strong>Description:</strong> {{ tractor.description }}</p>
+            <a href="{% url 'add-review' tractor.id %}" class="btn btn-primary">Add Review</a>
+        </div>
+    </div>
+
+    <div class="reviews mt-5">
+        <h4>Reviews</h4>
+        {% for review in reviews %}
+        <div class="review mb-4">
+            <p><strong>{{ review.user.username }}</strong> - Rating: {{ review.rating }} / 5</p>
+            <p>{{ review.review_text }}</p>
+        </div>
+        {% empty %}
+        <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

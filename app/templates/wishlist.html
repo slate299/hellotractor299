@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="wishlist-page">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Your Wishlist</h2>
+        <p class="text-center mb-5">Manage the tractors and parts you're interested in.</p>
+
+        {% if wishlist_items %}
+        <div class="row">
+            {% for item in wishlist_items %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-light rounded h-100">
+                    <!-- Tractor Image -->
+                    <img
+                        src="{{ item.tractor.images.url }}"
+                        class="card-img-top"
+                        alt="{{ item.tractor.name }}"
+                        style="max-height: 200px; object-fit: cover;">
+
+                    <div class="card-body d-flex flex-column">
+                        <!-- Tractor Details -->
+                        <h5 class="card-title">{{ item.tractor.name }}</h5>
+                        <p class="card-text text-muted mb-3">
+                            {{ item.tractor.description|truncatewords:15 }}
+                        </p>
+                        <p><strong>Price:</strong> Ksh {{ item.tractor.price }}</p>
+                        <p><strong>Location:</strong> {{ item.tractor.location }}</p>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-auto">
+                            <a
+                                href="{% url 'tractor-details' item.tractor.id %}"
+                                class="btn btn-primary btn-block mb-2">
+                                View Details
+                            </a>
+                            <a
+                                href="{% url 'remove-from-wishlist' item.tractor.id %}"
+                                class="btn btn-danger btn-block">
+                                Remove from Wishlist
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <p>Your wishlist is empty. Add tractors to see them here!</p>
+            <a href="{% url 'tractor-listings' %}" class="btn btn-outline-primary">
+                Browse Listings
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

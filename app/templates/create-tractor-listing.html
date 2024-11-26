@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center mb-5">Create a New Tractor Listing</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Tractor Section -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Tractor</h3>
+
+                <div class="form-group">
+                    <label for="tractor_title">Title (Make and Model)</label>
+                    <input type="text" class="form-control" id="tractor_title" name="title" required placeholder="e.g., John Deere 3038E">
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_description">Description</label>
+                    <textarea class="form-control" id="tractor_description" name="description" required placeholder="Condition, features, age, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_brand">Brand</label>
+                    <select class="form-control" id="tractor_brand" name="brand" required>
+                        <option value="">Select Brand</option>
+                        <option value="John Deere">John Deere</option>
+                        <option value="Massey Ferguson">Massey Ferguson</option>
+                        <option value="Kubota">Kubota</option>
+                        <option value="New Holland">New Holland</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_price">Price (Ksh)</label>
+                    <input type="number" class="form-control" id="tractor_price" name="price" required placeholder="Enter Price">
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_hours_used">Hours Used</label>
+                    <input type="number" class="form-control" id="tractor_hours_used" name="hours_used" required placeholder="Enter hours used">
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_age">Age (Years)</label>
+                    <input type="number" class="form-control" id="tractor_age" name="age" required placeholder="Enter age of the tractor">
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_location">Location</label>
+                    <input type="text" class="form-control" id="tractor_location" name="location" required placeholder="Enter location">
+                </div>
+
+                <div class="form-group">
+                    <label for="tractor_images">Images</label>
+                    <input type="file" class="form-control-file" id="tractor_images" name="images" accept="image/*" multiple onchange="previewImage(event, 'tractor-image-preview')">
+                    <img id="tractor-image-preview" style="display:none; width: 100px; height: auto; margin-top: 10px;" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden Seller ID -->
+        <input type="hidden" name="seller" value="{{ user.id }}">
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-block">Create Listing</button>
+    </form>
+
+    <!-- Pagination for Tractor Listings -->
+    <div class="row mt-5">
+        {% if tractors.has_other_pages %}
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination">
+                {% if tractors.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ tractors.previous_page_number }}" tabindex="-1">Previous</a>
+                </li>
+                {% endif %}
+                {% for page_num in tractors.paginator.page_range %}
+                <li class="page-item {% if tractors.number == page_num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                </li>
+                {% endfor %}
+                {% if tractors.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ tractors.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function previewImage(event, previewId) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById(previewId);
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center mb-5">Create a New Implement Listing</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Implement Section -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Implement</h3>
+
+                <div class="form-group">
+                    <label for="implement_name">Name</label>
+                    <input type="text" class="form-control" id="implement_name" name="name" required placeholder="Enter implement name">
+                </div>
+
+                <div class="form-group">
+                    <label for="implement_category">Category</label>
+                    <input type="text" class="form-control" id="implement_category" name="category" required placeholder="Enter implement category (e.g., Plough)">
+                </div>
+
+                <div class="form-group">
+                    <label for="implement_price">Price (Ksh)</label>
+                    <input type="number" class="form-control" id="implement_price" name="price" required placeholder="Enter price">
+                </div>
+
+                <div class="form-group">
+                    <label for="implement_compatibility">Compatibility</label>
+                    <input type="text" class="form-control" id="implement_compatibility" name="compatibility" required placeholder="Enter compatibility (e.g., John Deere 3038E)">
+                </div>
+
+                <div class="form-group">
+                    <label for="implement_stock">Stock</label>
+                    <input type="number" class="form-control" id="implement_stock" name="stock" required placeholder="Enter stock quantity">
+                </div>
+
+                <div class="form-group">
+                    <label for="implement_images">Images</label>
+                    <input type="file" class="form-control-file" id="implement_images" name="images" accept="image/*" multiple onchange="previewImage(event, 'implement-image-preview')">
+                    <img id="implement-image-preview" style="display:none; width: 100px; height: auto; margin-top: 10px;" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden Seller ID -->
+        <input type="hidden" name="seller" value="{{ user.id }}">
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-block">Create Listing</button>
+    </form>
+</div>
+
+<script>
+    function previewImage(event, previewId) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById(previewId);
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+{% endblock %}

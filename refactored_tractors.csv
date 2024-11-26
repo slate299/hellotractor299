@@ -1,0 +1,6 @@
+model,Image Path,Tractor ID,valid_id
+Sonalika DI-35,https://ht-mobileassets.s3.amazonaws.com/tractorModels/DI-35-removebg-preview.png,1,True
+Massey Ferguson 5710,https://s3-us-west-2.amazonaws.com/ht-mobileassets/ti_massey_ferguson_tractor_mf5710.png,2,True
+Kubota Harvester,https://ht-mobileassets.s3.amazonaws.com/tractorModels/Yanmar.jpg,3,True
+Case IH JX90,https://ht-mobileassets.s3.amazonaws.com/tractorModels/Case_IH_JX90.png,4,True
+John Deere 6095B,https://ht-mobileassets.s3.amazonaws.com/tractorModels/6095B-removebg-preview.png,5,True

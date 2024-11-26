@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Your Tractor Listings</h2>
+  {% if tractors %}
+    <ul class="">
+      {% for tractor in tractors %}
+        <li class="">
+          <h3>{{ tractor.title }}</h3>
+          <p>{{ tractor.description }}</p>
+          <p>Price: {{ tractor.price }} | Location: {{ tractor.location }}</p>
+          <a href="{% url 'edit-listing' tractor.id %}" class="">Edit</a> |
+          <a href="{% url 'delete-listing' tractor.id %}" onclick="return confirm('Are you sure you want to delete this listing?')" class="">Delete</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You have no listings yet.</p>
+  {% endif %}
+{% endblock %}

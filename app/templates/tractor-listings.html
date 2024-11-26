@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="featured-listings" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Featured Tractors</h2>
+
+        <!-- Filter/Search Form -->
+        <form method="GET" class="mb-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search by title or description"
+                        value="{{ search_query|default:'' }}">
+                </div>
+                <div class="col-md-3">
+                    <select name="brand" class="form-control">
+                        <option value="">Select Brand</option>
+                        {% for b in brands %}
+                            <option value="{{ b }}" {% if b == selected_brand %}selected{% endif %}>{{ b }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="location" class="form-control">
+                        <option value="">Select Location</option>
+                        {% for loc in locations %}
+                            <option value="{{ loc }}" {% if loc == selected_location %}selected{% endif %}>{{ loc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Tractor Listings -->
+        <div class="row">
+            {% if tractors %}
+                {% for tractor in tractors %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img
+                            src="{{ tractor.images.url }}"
+                            class="card-img-top"
+                            alt="{{ tractor.title }} Image"
+                            onerror="this.src='{% static 'default_tractor.jpg' %}'">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tractor.title }}</h5>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa fa-tag me-2"></i><strong>Brand:</strong> {{ tractor.brand.name }}
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa fa-money me-2"></i><strong>Price:</strong> Ksh {{ tractor.price }}
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa fa-map-marker-alt me-2"></i><strong>Location:</strong> {{ tractor.location }}
+                            </div>
+                            <a href="{% url 'tractor-details' tractor.id %}" class="btn btn-primary btn-sm">View Details</a>
+                            <form method="POST" action="{% url 'add-to-wishlist' tractor.id %}" class="mt-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary btn-sm">
+                                    <i class="fa fa-heart"></i> Add to Wishlist
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center">No tractors available at the moment. Check back later!</p>
+            {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        {% if tractors.has_other_pages %}
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination">
+                {% if tractors.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ tractors.previous_page_number }}" tabindex="-1">Previous</a>
+                </li>
+                {% endif %}
+                {% for page_num in tractors.paginator.page_range %}
+                <li class="page-item {% if tractors.number == page_num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                </li>
+                {% endfor %}
+                {% if tractors.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ tractors.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,190 @@
+:root {
+    --background: hsl(218, 65%, 100%);
+    --foreground: hsl(218, 69%, 2%);
+    --primary: hsl(13.8, 100%, 60.78%);
+    --primary-foreground: hsl(218, 47%, 99%);
+    --secondary: hsl(300, 43.28%, 26.27%);
+    --accent: hsl(193.47, 73.13%, 39.41%);
+    --radius: 0.5rem;
+}
+
+/* General Styles */
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ff5821;
+    padding: 0;
+}
+
+.navbar-nav .nav-link {
+    color: var(--primary-foreground) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Hero Section */
+#hero {
+    text-align: center;
+    padding: 5rem 0;
+    background-color: var(--primary);
+    color: white;
+}
+
+#hero h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#hero .btn {
+    background-color: var(--accent);
+}
+
+/* Carousel */
+#carousel img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: var(--radius);
+    font-size: 1.1rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--primary);
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+/* Featured Listings */
+#featured-listings {
+    background-color: var(--background);
+    padding: 5rem 0;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+}
+
+.card-text {
+    color: #555;
+}
+
+/* Wishlist Page Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+}
+
+/* Tractor Listings */
+.tractors {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tractor {
+    width: 30%;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tractor img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 180px;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    #carousel img {
+        max-height: 200px;
+    }
+
+    .carousel-caption {
+        font-size: 0.9rem;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 10%;
+    }
+
+    .tractor {
+        width: 100%; /* Full width for smaller screens */
+    }
+}
